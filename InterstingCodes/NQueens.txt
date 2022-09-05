@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+void print(int **sol,int n){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cout<<sol[i][j]<<' ';
+        }
+        cout<<endl;
+    }
+}
+bool isSafe(int **sol,int n,int row, int col){
+    for(int i=0;i<col;i++){
+        if(sol[row][i]){
+            return false;
+        }
+    }
+
+    for(int i=row,j=col;i>=0&&j>=0;i--,j--){
+        if(sol[i][j]){
+            return false;
+        }
+    }
+    for(int i=row,j=col;i<n&&j>=0;i++,j--){
+        if(sol[i][j]){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool solveRec(int **sol,int col,int n){
+
+    if(col==n){
+        return true;
+    }
+    for(int i=0;i<n;i++){
+        if(isSafe(sol,n,i,col)){
+            sol[i][col]=1;
+            if(solveRec(sol,col+1,n)){
+                return true;
+            }
+            sol[i][col]=0;
+        }
+    }
+    return false;
+}
+bool solveQ(int **sol,int n){
+    if(solveRec(sol,0,n)==false){
+        return false;
+    }
+    else{
+        print(sol,n);
+        return true;
+    }
+
+}
+
+
+
+int main(){
+    int n;
+    cin>>n;
+    int **sol = new int *[n];
+    for(int i=0;i<n;i++){
+        sol[i]= new int [n];
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+
+            sol[i][j]=0;
+        }
+    }
+    /*******solving maze*******/
+    if(solveQ(sol,n)==1){
+        cout<<"YES"<<endl;
+    }
+    else{
+        cout<<"NO"<<endl;
+    }
+
+
+}
+

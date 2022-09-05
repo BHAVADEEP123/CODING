@@ -1,0 +1,61 @@
+//shortest path from given vertex to every other vertex
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int ans=0;//no cycle
+void addedge(vector<int>adj[],int u,int v){
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+bool DFSRec(vector<int>adj[],int s,bool vis[],int parent){
+    vis[s]=true;
+    for(int u:adj[s]){
+        if(vis[u]==false){
+            if(DFSRec(adj,u,vis,s)==true){
+                return true;
+            }
+        }
+        else if(u!=parent){
+            return true;
+        }
+
+    }
+    return false;
+}
+bool DFS(vector<int>adj[],int V){
+    bool vis[V];
+    for(int i=0;i<V;i++){
+        vis[i]=false;
+    }
+    for(int i=0;i<V;i++){
+        if(vis[i]==false)
+            if(DFSRec(adj,i,vis,-1)==true)
+                return true;
+    }
+    return false;
+}
+int main() {
+    int V;
+    cin>>V;
+    int es;
+    cin>>es;
+    vector<int>adj[V];
+    for(int i=0;i<es;i++){
+        int u,v;
+        cin>>u>>v;
+        addedge(adj,u,v);
+
+    }
+
+    int vis[V]={0};
+    int no_of_comps=0;
+
+    if(DFS(adj,V)){
+        cout<<"YES"<<endl;
+    }
+    else{
+        cout<<"NO"<<endl;
+    }
+
+}

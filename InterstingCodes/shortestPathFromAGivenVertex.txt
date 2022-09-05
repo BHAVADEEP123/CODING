@@ -1,0 +1,58 @@
+//shortest path from given vertex to every other vertex
+
+
+#include<bits/stdc++.h>
+using namespace std;
+void addedge(vector<int>adj[],int u,int v){
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+void short_path(vector<int>adj[],int s,int vis[],int dis[]){
+    queue<int>q;
+    q.push(s);
+    dis[s]=0;
+    vis[s]=1;
+    while(!q.empty()){
+        int u=q.front();
+        q.pop();
+        for(int x:adj[u]){
+            if(vis[x]==0){
+                vis[x]=1;
+                dis[x]=dis[u]+1;
+                q.push(x);
+            }
+        }
+    }
+
+
+}
+int main() {
+    int V;
+    cin>>V;
+    int es;
+    cin>>es;
+    vector<int>adj[V];
+    for(int i=0;i<es;i++){
+        int u,v;
+        cin>>u>>v;
+        addedge(adj,u,v);
+
+    }
+    int s;
+    cin>>s;
+    int vis[V]={0};
+    int no_of_comps=0;
+    int dis[V]={-1};
+    short_path(adj,s,vis,dis);
+    for(int i=0;i<V;i++){
+        if(vis[i]==0){
+            cout<<"So Far Away"<<' ';
+        }
+        else{
+            cout<<dis[i]<<' ';
+        }
+
+    }
+    cout<<endl;
+
+}

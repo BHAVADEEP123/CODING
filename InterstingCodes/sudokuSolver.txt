@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool isSafe(int **sol,int i,int j,int inp,int n){
+    for(int k=0;k<n;k++){
+        if(sol[i][k]==inp||sol[k][j]==inp){
+            return false;
+        }
+
+    }
+    int s = sqrt(n);
+    int rs = i-i%s;
+    int cs = j-j%s;
+    for(int i=0;i<s;i++){
+        for(int j=0;j<s;j++){
+            if(sol[i+rs][j+cs]==inp){
+                return false;
+            }
+        }
+    }
+    return true;
+
+}
+bool solve(int **sol,int n){
+    int i,j;
+    for(i=0;i<n;i++){
+        for(j=0;j<n;j++){
+            if(sol[i][j]==0){
+                break;
+            }
+        }
+    }
+    if(i==n&&j==n){
+        return true;
+    }
+    for(int t=1;t<=n;t++){
+        if(isSafe(sol,i,j,t,n)){
+            sol[i][j]=t;
+            if(solve(sol,n)){
+                return true;
+            }
+            sol[i][j]=0;
+        }
+    }
+    return false;
+}
+
+
+int main(){
+    int n;
+    cin>>n;
+    int **sol = new int *[n];
+    for(int i=0;i<n;i++){
+        sol[i]= new int [n];
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>sol[i][j];
+        }
+    }
+    /*******solving sudoku*******/
+    if(solve(sol,n)==1){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                cout<<sol[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        cout<<"HENCE SOLVED"<<endl;
+    }
+    else{
+        cout<<"NOT A VALID SUDOKU TO SOLVE!!"<<endl;
+    }
+
+
+}

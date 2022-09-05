@@ -1,0 +1,134 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class ll{
+
+
+public:
+    int val;
+    ll *next;
+    ll(int t){
+        val = t;
+        next = NULL;
+    }
+
+};
+class stk{
+private :
+    ll* head = NULL;
+public:
+    void push(int x){
+        ll *pt = new ll(x);
+        if(head==NULL){
+            head = pt;
+        }
+        else{
+            ll*ptr = head;
+            while(ptr->next!=NULL){
+                ptr = ptr->next;
+            }
+            ptr->next = pt;
+        }
+    }
+    int pop(){
+        if(head==NULL){
+            return -1;
+        }
+        int temp = head->val;
+        head = head->next;
+        return temp;
+    }
+    int top(){
+        if(head==NULL){
+            return -1;
+        }
+        return head->val;
+
+    }
+    int isEmpty(){
+        if(head==NULL)return 1;
+        return 0;
+    }
+
+};
+class Graph{
+private:
+    int **adj;
+    int sizee;
+public:
+    Graph(int n){
+        sizee=n;
+        adj = new int*[n];
+        for(int i=0;i<n;i++){
+            adj[i]=new int[n];
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                adj[i][j]=0;
+            }
+        }
+    }
+    void operator +=(pair<int,int>p){
+        adj[p.first][p.second]=1;
+        adj[p.second][p.first]=1;
+    }
+    void operator -=(pair<int,int>p){
+        adj[p.first][p.second]=0;
+        adj[p.second][p.first]=0;
+    }
+    bool DFSRec(int s,bool vis[],int parent){
+        vis[s]=true;
+        for(int i=0;i<sizee;i++){
+            if(adj[s][i]==1){
+                int u = i;
+                        if(vis[u]==false){
+                    if(DFSRec(u,vis,s)==true){
+                        return true;
+                    }
+                }
+                else if(u!=parent){
+                    return true;
+                }
+
+            }
+
+
+        }
+        return false;
+    }
+
+    int detectCycle(){
+        bool vis[sizee];
+        for(int i=0;i<sizee;i++){
+            vis[i]=false;
+        }
+        for(int i=0;i<sizee;i++){
+            if(vis[i]==false)
+            if(DFSRec(i,vis,-1)==true)
+                return 1;
+        }
+        return 0;
+    }
+    int reach(int u, int v){
+        stk s;
+        s.push(u);
+        while(!s.isEmpty()){
+            int source = s.pop();
+            if(source==v)return 1;
+            for(int i=0;i<sizee;i++){
+                if(adj[v][i]==1){
+                    s.push()
+                }
+            }
+        }
+    }
+
+};
+
+int main() {
+
+}

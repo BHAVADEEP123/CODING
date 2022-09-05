@@ -1,0 +1,5 @@
+1 ) Bariflo labs  ( AI/Datascience /10000 )
+2 ) Subspace	(DataScience /15000)
+3 ) Meiro Mobility(Front End /10000)
+4 ) Supernova (Web Devlopment /15000)
+5 ) Meiro Mobility( ML /10000)

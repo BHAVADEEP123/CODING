@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+void addedge(vector<int>adj[],int u,int v){
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+void DFS(vector<int>adj[],int s,int vis[]){
+
+    if(vis[s]==1){
+        return ;
+    }
+    vis[s]=1;
+    cout<<s<<' ';
+    for(int x:adj[s]){
+
+        DFS(adj,x,vis);
+    }
+
+
+}
+int main() {
+    int V;
+    cin>>V;
+    int es;
+    cin>>es;
+    vector<int>adj[V];
+    for(int i=0;i<es;i++){
+        int u,v;
+        cin>>u>>v;
+        addedge(adj,u,v);
+
+    }
+    int vis[V]={0};
+    int no_of_comps=0;
+    for(int i=0;i<V;i++){
+        if(vis[i]==0){
+            DFS(adj,i,vis);
+            cout<<endl;
+            no_of_comps++;
+        }
+    }
+    cout<<"Number of components are: "<<no_of_comps<<endl;
+
+}
